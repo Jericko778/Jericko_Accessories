@@ -8,5 +8,9 @@
   "block.accessories.test_ore": "Epic Ore",
   "block.accessories.deepslate_test_ore": "Deepslate Epic Ore",
 
-  "creativemodetab.accessory_tab": "Accessories"
+  "creativemodetab.accessory_tab": "Accessories",
+
+  "key.category.accessories.accessories" : "Accessories",
+
+  "key.accessories.first_slot" : "First Accessory Slot Hotkey"
 }
