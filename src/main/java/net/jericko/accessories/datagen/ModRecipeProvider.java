@@ -47,6 +47,5 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             ItemLike itemlike = (ItemLike)var9.next();
             SimpleCookingRecipeBuilder.generic(Ingredient.of(new ItemLike[]{itemlike}), p_251154_, p_250066_, p_251871_, p_251316_, p_251817_).group(p_251450_).unlockedBy(getHasName(itemlike), has(itemlike)).save(p_250791_, new ResourceLocation(Accessories.MOD_ID, getItemName(p_250066_)) + p_249236_ + "_" + getItemName(itemlike));
         }
-
     }
 }

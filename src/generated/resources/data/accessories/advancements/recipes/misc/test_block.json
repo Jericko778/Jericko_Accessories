@@ -30,5 +30,6 @@
     "recipes": [
       "accessories:test_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,4 +1,4 @@
-// 1.19.3	2023-12-10T22:31:21.4454018	Loot Tables
-b21f3c059329ecbe4df3957205e8f2abd67577f4 data/accessories/loot_tables/blocks/deepslate_test_ore.json
-b608975cb66479dda1acb26b0abf481256ea78c7 data/accessories/loot_tables/blocks/test_block.json
-a1ff9c14739aaf2cc49c0b1363e1d667021b79c9 data/accessories/loot_tables/blocks/test_ore.json
+// 1.20.1	2023-12-26T16:11:41.636243	Loot Tables
+c9027e4ba1fbbde7a5f68966764d998bba37f2b2 data/accessories/loot_tables/blocks/deepslate_test_ore.json
+700450cbd4e70e5e12efa3f86bb159e6f7017765 data/accessories/loot_tables/blocks/test_block.json
+07b41abd296f99e8c37531c51210daac32ce63d0 data/accessories/loot_tables/blocks/test_ore.json

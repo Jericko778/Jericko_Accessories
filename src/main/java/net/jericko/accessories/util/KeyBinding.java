@@ -7,6 +7,6 @@ import org.lwjgl.glfw.GLFW;
 
 public class KeyBinding {
     public static final String KEY_CATEGORY_ACCESSORIES = "key.category.accessories.accessories";
-    public static final String KEY_FIRST_SLOT = "key.accessories.first_slot";
-    public static final KeyMapping FIRST_SLOT = new KeyMapping(KEY_FIRST_SLOT, KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_F, KEY_CATEGORY_ACCESSORIES);
+    public static final String KEY_DASH = "key.accessories.dash";
+    public static final KeyMapping DASH = new KeyMapping(KEY_DASH, KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_CONTROL, KEY_CATEGORY_ACCESSORIES);
 }

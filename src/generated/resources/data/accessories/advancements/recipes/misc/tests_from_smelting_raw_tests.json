@@ -30,5 +30,6 @@
     "recipes": [
       "accessories:tests_from_smelting_raw_tests"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
