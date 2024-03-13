@@ -74,6 +74,7 @@ public class Accessories
             event.accept(ModBlocks.TEST_ORE);
             event.accept(ModBlocks.DEEPSLATE_TEST_ORE);
             event.accept(ModItems.DASH);
+            event.accept(ModItems.BOOTS);
         }
     }
 

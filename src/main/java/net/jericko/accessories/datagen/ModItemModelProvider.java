@@ -18,6 +18,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         handheldItem(ModItems.DASH);
+        simpleItem(ModItems.BOOTS);
         simpleItem(ModItems.TEST_ITEM);
         simpleItem(ModItems.TEST_RAW);
     }
