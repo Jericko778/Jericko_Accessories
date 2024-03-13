@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "epic_item",
+  "ingredient": {
+    "item": "accessories:raw_tests"
+  },
+  "result": "accessories:tests"
+}
