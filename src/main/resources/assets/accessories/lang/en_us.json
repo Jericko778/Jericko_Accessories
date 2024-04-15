@@ -1,16 +1,16 @@
 {
-  "item.accessories.tests": "Epic Item",
-  "item.accessories.raw_tests": "Raw Epic Item",
-
   "item.accessories.dash": "Dash Scarf",
+  "item.accessories.boots": "Lightning Boots",
 
-  "block.accessories.test_block": "Block of Epic",
-  "block.accessories.test_ore": "Epic Ore",
-  "block.accessories.deepslate_test_ore": "Deepslate Epic Ore",
+  "item.accessories.mirror": "Magic Mirror",
+
+  "item.accessories.cloud_in_a_bottle": "Cloud in a Bottle",
+
+  "item.accessories.knuckleblaster": "Knuckleblaster",
 
   "creativemodetab.accessory_tab": "Accessories",
 
-  "key.category.accessories.accessories" : "Accessories",
+  "key.category.accessories.accessories" : "Jericko's Boss Fights",
 
   "key.accessories.dash" : "Dash Hotkey"
 }

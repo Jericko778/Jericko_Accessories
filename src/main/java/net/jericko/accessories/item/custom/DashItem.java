@@ -12,6 +12,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public class DashItem extends Item implements ICurioItem {
+    //TODO: Add particles and cooldown indicator
     public static boolean isEquipped = false;
 
     public DashItem(Properties p_41383_) {

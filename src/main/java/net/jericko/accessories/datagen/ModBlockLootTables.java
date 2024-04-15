@@ -18,11 +18,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(ModBlocks.TEST_BLOCK.get());
-
-        add(ModBlocks.TEST_ORE.get(), (block) -> createOreDrop(ModBlocks.TEST_ORE.get(), ModItems.TEST_RAW.get()));
-        add(ModBlocks.DEEPSLATE_TEST_ORE.get(), (block) -> createOreDrop(ModBlocks.DEEPSLATE_TEST_ORE.get(), ModItems.TEST_RAW.get()));
-    }
+           }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {

@@ -18,8 +18,9 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         handheldItem(ModItems.DASH);
-        simpleItem(ModItems.TEST_ITEM);
-        simpleItem(ModItems.TEST_RAW);
+        handheldItem(ModItems.MIRROR);
+        simpleItem(ModItems.CLOUD_IN_A_BOTTLE);
+        simpleItem(ModItems.BOOTS);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){
