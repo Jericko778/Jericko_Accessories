@@ -1,8 +1,5 @@
 {
   "replace": false,
   "values": [
-    "accessories:test_ore",
-    "accessories:test_block",
-    "accessories:deepslate_test_ore"
   ]
 }

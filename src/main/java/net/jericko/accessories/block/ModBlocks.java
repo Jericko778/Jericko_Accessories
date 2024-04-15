@@ -19,17 +19,6 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Accessories.MOD_ID);
 
-    public static final RegistryObject<Block> TEST_BLOCK = registerBlock("test_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
-                            .strength(3f)
-                                .requiresCorrectToolForDrops()));
-    public static final RegistryObject<Block> TEST_ORE = registerBlock("test_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
-            .strength(3f)
-            .requiresCorrectToolForDrops(), UniformInt.of(2, 5)));
-    public static final RegistryObject<Block> DEEPSLATE_TEST_ORE = registerBlock("deepslate_test_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)
-            .strength(4.5f, 3f)
-            .requiresCorrectToolForDrops(), UniformInt.of(2, 5)));
-
-
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

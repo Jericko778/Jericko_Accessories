@@ -22,10 +22,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        oreSmelting(consumer, List.of(ModItems.TEST_RAW.get()), RecipeCategory.MISC, ModItems.TEST_ITEM.get(), 0.7f, 200, "epic_item");
-        nineBlockStorageRecipes(consumer, RecipeCategory.BUILDING_BLOCKS, ModItems.TEST_ITEM.get(), RecipeCategory.MISC, ModBlocks.TEST_BLOCK.get());
-    }
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {}
 
     protected static void nineBlockStorageRecipes(Consumer<FinishedRecipe> p_249580_, RecipeCategory p_251203_, ItemLike p_251689_, RecipeCategory p_251376_, ItemLike p_248771_) {
         nineBlockStorageRecipes(p_249580_, p_251203_, p_251689_, p_251376_, p_248771_, getSimpleRecipeName(p_248771_), (String)null, getSimpleRecipeName(p_251689_), (String)null);

@@ -9,6 +9,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public class SpeedItem extends Item implements ICurioItem {
+    //TODO: Add particles
     public SpeedItem(Properties p_41383_) {
         super(p_41383_);
     }

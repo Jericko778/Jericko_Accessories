@@ -54,27 +54,20 @@ public class Accessories
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-            event.accept(ModItems.TEST_ITEM);
-            event.accept(ModItems.TEST_RAW);
         }
 
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
-            event.accept(ModBlocks.TEST_BLOCK);
         }
 
         if(event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS){
-            event.accept(ModBlocks.TEST_ORE);
-            event.accept(ModBlocks.DEEPSLATE_TEST_ORE);
         }
 
         if(event.getTab() == ModCreativeModeTabs.ACCESSORY_TAB.get()){
-            event.accept(ModItems.TEST_ITEM);
-            event.accept(ModItems.TEST_RAW);
-            event.accept(ModBlocks.TEST_BLOCK);
-            event.accept(ModBlocks.TEST_ORE);
-            event.accept(ModBlocks.DEEPSLATE_TEST_ORE);
             event.accept(ModItems.DASH);
             event.accept(ModItems.BOOTS);
+            event.accept(ModItems.MIRROR);
+            event.accept(ModItems.CLOUD_IN_A_BOTTLE);
+            event.accept(ModItems.KNUCKLEBLASTER);
         }
     }
 

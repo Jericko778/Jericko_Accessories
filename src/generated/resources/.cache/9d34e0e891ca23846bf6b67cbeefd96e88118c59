@@ -1,10 +1,1 @@
-// 1.20.1	2023-12-26T16:11:41.6383737	Block States: accessories
-922f3fcb8e1d40ed99b719bf887b9ac7b4d09a83 assets/accessories/blockstates/deepslate_test_ore.json
-df846ad5c51575ef4142e85712f62d98bc26441b assets/accessories/blockstates/test_block.json
-de9dc3061520417c8992b9441d4aeeb2817e6eb0 assets/accessories/blockstates/test_ore.json
-7c8642283dbfba75e2255a2bfd1669fa4b5878d6 assets/accessories/models/block/deepslate_test_ore.json
-7ed72580283c09aae6cffc88f09764609c60443c assets/accessories/models/block/test_block.json
-45660e97a2c6b7a6c7689ff44594027416d5ce6d assets/accessories/models/block/test_ore.json
-7d0e971e9dd3250b1be5e8805768546335301dc8 assets/accessories/models/item/deepslate_test_ore.json
-e0cf0f24699cd4b43fee9b3de40a37d989a236a6 assets/accessories/models/item/test_block.json
-eebe2d898063874c34b8efae9010bc65ace52be5 assets/accessories/models/item/test_ore.json
+// 1.20.1	2024-04-14T20:56:18.5395	Block States: accessories
