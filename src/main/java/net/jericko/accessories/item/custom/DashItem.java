@@ -1,6 +1,9 @@
 package net.jericko.accessories.item.custom;
 
 import net.jericko.accessories.item.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -20,11 +23,12 @@ public class DashItem extends Item implements ICurioItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level p_41432_, Player player, InteractionHand p_41434_) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand p_41434_) {
         Vec3 playerLook = player.getViewVector(1);
         Vec3 dashVec = new Vec3(playerLook.x(), 0, playerLook.z());
         player.addDeltaMovement(dashVec);
         player.getCooldowns().addCooldown(ModItems.DASH.get(), 50);
+        level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_HIT, SoundSource.PLAYERS, 1.0F, 1.0F);
 
         return InteractionResultHolder.pass(player.getItemInHand(p_41434_));
     }
