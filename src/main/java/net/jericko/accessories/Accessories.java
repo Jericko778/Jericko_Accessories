@@ -68,6 +68,7 @@ public class Accessories
             event.accept(ModItems.MIRROR);
             event.accept(ModItems.CLOUD_IN_A_BOTTLE);
             event.accept(ModItems.KNUCKLEBLASTER);
+            event.accept(ModItems.CHAOSPISTOL);
         }
     }
 
