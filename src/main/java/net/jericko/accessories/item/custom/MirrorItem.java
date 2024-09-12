@@ -18,8 +18,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 
-import java.util.Set;
-
 public class MirrorItem extends Item {
     public MirrorItem(Properties p_41383_) {
         super(p_41383_);

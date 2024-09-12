@@ -1,7 +1,6 @@
 package net.jericko.accessories.item.custom;
 
 import net.jericko.accessories.Accessories;
-import net.jericko.accessories.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -13,9 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 @Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
 public class DoubleJumpItem extends Item implements ICurioItem {

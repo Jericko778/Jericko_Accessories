@@ -17,7 +17,7 @@ public class ModItems {
     public static final RegistryObject<Item> MIRROR = ITEMS.register("mirror", () -> new MirrorItem(new Item.Properties().stacksTo(1).durability(100)));
     public static final RegistryObject<Item> CLOUD_IN_A_BOTTLE = ITEMS.register("cloud_in_a_bottle", () -> new DoubleJumpItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> KNUCKLEBLASTER = ITEMS.register("knuckleblaster", () -> new ArmItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> CHAOSPISTOL = ITEMS.register("crescentmoon", () -> new Item(new Item.Properties().stacksTo(2)));
+    public static final RegistryObject<Item> CHAOSPISTOL = ITEMS.register("crescentmoon", () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

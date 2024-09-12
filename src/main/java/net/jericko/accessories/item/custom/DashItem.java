@@ -1,7 +1,6 @@
 package net.jericko.accessories.item.custom;
 
 import net.jericko.accessories.item.ModItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
