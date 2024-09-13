@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.jericko.accessories.block.ModBlocks;
 import net.jericko.accessories.item.ModCreativeModeTabs;
 import net.jericko.accessories.item.ModItems;
+import net.jericko.accessories.particle.ModParticles;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,7 +35,10 @@ public class Accessories
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
+
         ModBlocks.register(modEventBus);
+
+        ModParticles.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
