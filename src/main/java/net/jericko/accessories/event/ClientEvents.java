@@ -23,9 +23,9 @@ public class ClientEvents {
 
             if(KeyBinding.DASH.consumeClick() && DashItem.isEquipped && !player.getCooldowns().isOnCooldown(ModItems.DASH.get())){
                 Vec3 playerLook = player.getViewVector(1);
-                Vec3 dashVec = new Vec3(playerLook.x(), 0, playerLook.z());
+                Vec3 dashVec = new Vec3(playerLook.x(), playerLook.y(), playerLook.z());
                 player.setDeltaMovement(dashVec);
-                player.getCooldowns().addCooldown(ModItems.DASH.get(), 50);
+                player.getCooldowns().addCooldown(ModItems.DASH.get(), 30);
             }
         }
 

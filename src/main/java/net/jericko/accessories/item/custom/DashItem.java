@@ -24,10 +24,10 @@ public class DashItem extends Item implements ICurioItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand p_41434_) {
         Vec3 playerLook = player.getViewVector(1);
-        Vec3 dashVec = new Vec3(playerLook.x(), 0, playerLook.z());
-        player.addDeltaMovement(dashVec);
+        //Vec3 dashVec = new Vec3(playerLook.x(), playerLook.y(), playerLook.z());
+        player.addDeltaMovement(playerLook);
         player.getCooldowns().addCooldown(ModItems.DASH.get(), 50);
-        level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_HIT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_HIT, SoundSource.PLAYERS, 1.0F, 1.0F);
 
         return InteractionResultHolder.pass(player.getItemInHand(p_41434_));
     }
