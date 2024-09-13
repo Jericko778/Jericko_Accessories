@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -125,7 +126,7 @@ public class ArmItem extends Item implements GeoItem {
             }), 200);
         }
 
-       /* for(Entity i :level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x + direction.x - 20F, pos.y + direction.y - 20F, pos.z + direction.z - 20F, pos.x + direction.x + 20F, pos.y + direction.y + 20F, pos.z + direction.z + 20F))){
+        for(Entity i :level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x + direction.x - 20F, pos.y + direction.y - 20F, pos.z + direction.z - 20F, pos.x + direction.x + 20F, pos.y + direction.y + 20F, pos.z + direction.z + 20F))){
             if(player.canAttack((LivingEntity) i)){
                 KnuckleBlasterExplosion explosion = new KnuckleBlasterExplosion(level, player, pos.x + direction.x, pos.y + direction.y + 2, pos.z + direction.z, 10F, new ArrayList<BlockPos>());
                 explosion.explode();
@@ -135,7 +136,7 @@ public class ArmItem extends Item implements GeoItem {
                     j.knockback(500F, 500F, 500F);
                 }
             }
-        }*/
+        }
         if(player.canAttack(player)) {
             KnuckleBlasterExplosion explosion = new KnuckleBlasterExplosion(level, player, pos.x + direction.x, pos.y + direction.y + 2, pos.z + direction.z, 10F, new ArrayList<BlockPos>());
             explosion.explode();

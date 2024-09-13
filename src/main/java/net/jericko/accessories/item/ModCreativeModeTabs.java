@@ -14,6 +14,9 @@ public class ModCreativeModeTabs {
     public static RegistryObject<CreativeModeTab> ACCESSORY_TAB = CREATIVE_MODE_TABS.register("accessory_tab", () ->
             CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.KNUCKLEBLASTER.get()))
                     .title(Component.translatable("creativemodetab.accessory_tab")).build());
+    public static RegistryObject<CreativeModeTab> GUILTYGEAR_TAB = CREATIVE_MODE_TABS.register("guilty_gear_tab", () ->
+            CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.CHAOSPISTOL.get()))
+                    .title(Component.translatable("creativemodetab.guilty_gear_tab")).build());
 
     public static void register(IEventBus eventBus){
         CREATIVE_MODE_TABS.register(eventBus);
