@@ -1,10 +1,10 @@
 package net.jericko.accessories.event;
 
 import net.jericko.accessories.Accessories;
+import net.jericko.accessories.entity.ModEntities;
+import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.DashItem;
-import net.jericko.accessories.particle.ModParticles;
-import net.jericko.accessories.particle.custom.CitrineParticles;
 import net.jericko.accessories.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -19,6 +19,7 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -46,11 +47,6 @@ public class ClientEvents {
             event.register(KeyBinding.DASH);
         }
 
-        @SubscribeEvent
-        public static void registerParticle(final RegisterParticleProvidersEvent event)
-        {
-            //event.registerSpecial(ModParticles.CITRINE_PARTICLES.get(), CitrineParticles.Provider::new);
-        }
     }
 
 

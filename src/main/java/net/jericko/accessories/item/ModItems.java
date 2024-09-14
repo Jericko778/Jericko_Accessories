@@ -1,8 +1,10 @@
 package net.jericko.accessories.item;
 
 import net.jericko.accessories.Accessories;
+import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.item.custom.*;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
