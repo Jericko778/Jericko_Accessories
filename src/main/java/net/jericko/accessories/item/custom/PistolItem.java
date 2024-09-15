@@ -1,5 +1,6 @@
 package net.jericko.accessories.item.custom;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
 import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
@@ -7,32 +8,34 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderOwner;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -50,6 +53,20 @@ public class PistolItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand p_41434_) {
+
+        // Creates a Reticle
+
+        ItemStack itemstack = ModItems.CHAOSRETICLE.get().getDefaultInstance();
+        if (!level.isClientSide) {
+            ReticleEntity reticle = new ReticleEntity(level, player);
+            reticle.setItem(itemstack);
+            reticle.setNoGravity(true);
+            level.addFreshEntity(reticle);
+        }
+
+
+        // Shoots gun at targeted entity
+
         level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F,1.0F);
 
         Vec3 pos = player.position();
@@ -60,7 +77,8 @@ public class PistolItem extends Item {
             
             for(Entity i: hi) {
                 if(i != Entity.NULL){
-
+                    EyeOfEnder e = new EyeOfEnder(level, 1, 1, 1);
+                    e.setPos(player.position());
                 }
                 i.hurt(new DamageSource(new Holder<DamageType>() {
                     @Override

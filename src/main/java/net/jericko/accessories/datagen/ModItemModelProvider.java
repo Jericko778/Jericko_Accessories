@@ -21,6 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.MIRROR);
         simpleItem(ModItems.CLOUD_IN_A_BOTTLE);
         simpleItem(ModItems.BOOTS);
+        simpleItem(ModItems.CHAOSRETICLE);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){

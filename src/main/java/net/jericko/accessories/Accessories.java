@@ -3,11 +3,10 @@ package net.jericko.accessories;
 import com.mojang.logging.LogUtils;
 import net.jericko.accessories.block.ModBlocks;
 import net.jericko.accessories.entity.ModEntities;
-import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModCreativeModeTabs;
 import net.jericko.accessories.item.ModItems;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -91,6 +90,7 @@ public class Accessories
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+            EntityRenderers.register(ModEntities.CHAOSRETICLE.get(), ThrownItemRenderer::new);
         }
     }
 }

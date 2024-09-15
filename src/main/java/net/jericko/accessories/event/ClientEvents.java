@@ -1,25 +1,15 @@
 package net.jericko.accessories.event;
 
 import net.jericko.accessories.Accessories;
-import net.jericko.accessories.entity.ModEntities;
-import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.DashItem;
 import net.jericko.accessories.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
