@@ -57,35 +57,37 @@ public class PistolItem extends Item {
     public PistolItem(Properties p_41383_) {super(p_41383_);}
 
 
-//    @Override
-//    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
-//        super.inventoryTick(itemStack, level, entity, i, b);
-//
-//        Player player = Minecraft.getInstance().player;
-//        // Creates a Reticle
-//
-//        if(player != null){
-//            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
-//                ItemStack itemstack = ModItems.CHAOSRETICLE.get().getDefaultInstance();
-//                reticle = new ReticleEntity(level, player);
-//                reticle.setItem(itemstack);
-//                reticle.setNoGravity(true);
-//                level.addFreshEntity(reticle);
-//                reticleExists = true;
-//            }
-//
-//            //Removes reticle if not holding pistol
-//
-//            Vec3 pos = player.position();
-//            Vec3 direction = player.getViewVector(1);
-//            if(reticleExists && !player.isHolding(this)){
-//                reticleExists = false;
-//                reticle.kill();
-//            }
-//          }
-//
-//
-//    }
+    @Override
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
+        super.inventoryTick(itemStack, level, entity, i, b);
+
+        Player player = Minecraft.getInstance().player;
+
+        if(player != null){
+
+            // Creates a Reticle
+            // Changes to focused reticle if focusing
+            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
+                ItemStack itemstack = ModItems.CHAOSFOCUSRETICLE.get().getDefaultInstance();
+                reticle = new ReticleEntity(level, player);
+                reticle.setItem(itemstack);
+                reticle.setNoGravity(true);
+                level.addFreshEntity(reticle);
+                reticleExists = true;
+            }
+
+            //Removes reticle if not holding pistol
+
+            Vec3 pos = player.position();
+            Vec3 direction = player.getViewVector(1);
+            if(reticleExists && !player.isHolding(this)){
+                reticleExists = false;
+                reticle.kill();
+            }
+          }
+
+
+    }
 
 
 
@@ -96,21 +98,26 @@ public class PistolItem extends Item {
 
         level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F,1.0F);
 
+
         Vec3 pos = player.getEyePosition();
+        Vec3 direction = player.getViewVector(1);
 
         for(int range = 0; range <50; range++){
-            Vec3 direction = player.getViewVector(1);
             List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x*range, pos.y + direction.y*range, pos.z + direction.z*range));
 
             if(level.getBlockState(new BlockPos((int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))).getBlock() != Blocks.AIR) {
                 break;
             }
-            for(Entity i: hi) {
-//                if(i.getType() == ModEntities.CHAOSRETICLE.get()){
-//                    continue;
-//                }
+            for(Entity e: hi) {
+                if(e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()){
+                    continue;
+                }
+                boolean blocked = false;
+                for(int i = 0; i<range; i++){
+                    if(level.getBlockState(new BlockPos(pos.add(direction.multiply(i,i,i)))))
+                }
 
-                i.hurt(new DamageSource(new Holder<DamageType>() {
+                e.hurt(new DamageSource(new Holder<DamageType>() {
                     @Override
                     public DamageType value() {
                         return null;

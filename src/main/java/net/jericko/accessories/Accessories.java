@@ -90,7 +90,7 @@ public class Accessories
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            EntityRenderers.register(ModEntities.CHAOSRETICLE.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntities.CHAOSFOCUSRETICLE.get(), ThrownItemRenderer::new);
         }
     }
 }

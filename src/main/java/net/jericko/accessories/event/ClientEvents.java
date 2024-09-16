@@ -1,12 +1,11 @@
 package net.jericko.accessories.event;
 
 import net.jericko.accessories.Accessories;
-import net.jericko.accessories.client.BulletHudOverlay;
+import net.jericko.accessories.client.ReticleOverlay;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.DashItem;
 import net.jericko.accessories.util.KeyBinding;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -53,7 +52,7 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
-            event.registerAboveAll("bullet", BulletHudOverlay.HUD_BULLETS);
+            event.registerAboveAll("bullet", ReticleOverlay.HUD_RETICLE);
         }
     }
 

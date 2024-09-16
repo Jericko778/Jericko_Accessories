@@ -15,7 +15,7 @@ public class ModEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Accessories.MOD_ID);
 
 
-    public static final RegistryObject<EntityType<ReticleEntity>> CHAOSRETICLE =
+    public static final RegistryObject<EntityType<ReticleEntity>> CHAOSFOCUSRETICLE =
             ENTITY_TYPES.register("reticle", () -> EntityType.Builder.<ReticleEntity>of(ReticleEntity::new, MobCategory.MISC)
                     .sized(0.01f,0.01f).build("reticle"));
 
