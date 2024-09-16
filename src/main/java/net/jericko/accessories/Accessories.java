@@ -75,6 +75,7 @@ public class Accessories
             event.accept(ModItems.CLOUD_IN_A_BOTTLE);
             event.accept(ModItems.KNUCKLEBLASTER);
             event.accept(ModItems.CHAOSPISTOL);
+            event.accept(ModItems.CURSEDBALL);
         }
         if(event.getTab() == ModCreativeModeTabs.GUILTYGEAR_TAB.get()){
             event.accept(ModItems.CHAOSPISTOL);
