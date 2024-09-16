@@ -36,7 +36,7 @@ public class BulletHudOverlay {
             guiGraphics.blit(BULLET, x-16, y-17, 0,0,32,32, 32, 32);
         }
         else{
-            guiGraphics.blit(BULLET, x-16, y-16, 0,0,0,0, 0, 0);
+            guiGraphics.blit(BULLET, x-16, y-17, 0,0,0,0, 0, 0);
         }
 
     }));

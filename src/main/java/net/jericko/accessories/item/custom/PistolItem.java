@@ -57,10 +57,10 @@ public class PistolItem extends Item {
     public PistolItem(Properties p_41383_) {super(p_41383_);}
 
 
-    @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
-        super.inventoryTick(itemStack, level, entity, i, b);
-
+//    @Override
+//    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
+//        super.inventoryTick(itemStack, level, entity, i, b);
+//
 //        Player player = Minecraft.getInstance().player;
 //        // Creates a Reticle
 //
@@ -82,10 +82,10 @@ public class PistolItem extends Item {
 //                reticleExists = false;
 //                reticle.kill();
 //            }
-//        }
-
-
-    }
+//          }
+//
+//
+//    }
 
 
 
@@ -101,11 +101,9 @@ public class PistolItem extends Item {
         for(int range = 0; range <50; range++){
             Vec3 direction = player.getViewVector(1);
             List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x*range, pos.y + direction.y*range, pos.z + direction.z*range));
-            //level.getBlockState(new BlockPos( (int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))) != null
 
             if(level.getBlockState(new BlockPos((int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))).getBlock() != Blocks.AIR) {
-
-
+                break;
             }
             for(Entity i: hi) {
 //                if(i.getType() == ModEntities.CHAOSRETICLE.get()){
