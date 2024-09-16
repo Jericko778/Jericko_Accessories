@@ -67,14 +67,14 @@ public class PistolItem extends Item {
 
             // Creates a Reticle
             // Changes to focused reticle if focusing
-            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
-                ItemStack itemstack = ModItems.CHAOSFOCUSRETICLE.get().getDefaultInstance();
-                reticle = new ReticleEntity(level, player);
-                reticle.setItem(itemstack);
-                reticle.setNoGravity(true);
-                level.addFreshEntity(reticle);
-                reticleExists = true;
-            }
+//            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
+//                ItemStack itemstack = ModItems.CHAOSFOCUSRETICLE.get().getDefaultInstance();
+//                reticle = new ReticleEntity(level, player);
+//                reticle.setItem(itemstack);
+//                reticle.setNoGravity(true);
+//                level.addFreshEntity(reticle);
+//                reticleExists = true;
+//            }
 
             //Removes reticle if not holding pistol
 
@@ -105,74 +105,74 @@ public class PistolItem extends Item {
         for(int range = 0; range <50; range++){
             List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x*range, pos.y + direction.y*range, pos.z + direction.z*range));
 
-            if(level.getBlockState(new BlockPos((int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))).getBlock() != Blocks.AIR) {
-                break;
-            }
             for(Entity e: hi) {
                 if(e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()){
                     continue;
                 }
                 boolean blocked = false;
                 for(int i = 0; i<range; i++){
-                    if(level.getBlockState(new BlockPos(pos.add(direction.multiply(i,i,i)))))
+                    if(!level.getBlockState(new BlockPos((int)(pos.x + direction.x * i), (int)(pos.x + direction.x * i), (int)(pos.x + direction.x * i))).getBlock().equals(Blocks.AIR)){
+                        blocked = true;
+                    }
                 }
+                if(!blocked){
+                    e.hurt(new DamageSource(new Holder<DamageType>() {
+                        @Override
+                        public DamageType value() {
+                            return null;
+                        }
 
-                e.hurt(new DamageSource(new Holder<DamageType>() {
-                    @Override
-                    public DamageType value() {
-                        return null;
-                    }
+                        @Override
+                        public boolean isBound() {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean isBound() {
-                        return false;
-                    }
+                        @Override
+                        public boolean is(ResourceLocation p_205713_) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean is(ResourceLocation p_205713_) {
-                        return false;
-                    }
+                        @Override
+                        public boolean is(ResourceKey<DamageType> p_205712_) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean is(ResourceKey<DamageType> p_205712_) {
-                        return false;
-                    }
+                        @Override
+                        public boolean is(Predicate<ResourceKey<DamageType>> p_205711_) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean is(Predicate<ResourceKey<DamageType>> p_205711_) {
-                        return false;
-                    }
+                        @Override
+                        public boolean is(TagKey<DamageType> p_205705_) {
+                            return false;
+                        }
 
-                    @Override
-                    public boolean is(TagKey<DamageType> p_205705_) {
-                        return false;
-                    }
+                        @Override
+                        public Stream<TagKey<DamageType>> tags() {
+                            return Stream.empty();
+                        }
 
-                    @Override
-                    public Stream<TagKey<DamageType>> tags() {
-                        return Stream.empty();
-                    }
+                        @Override
+                        public Either<ResourceKey<DamageType>, DamageType> unwrap() {
+                            return null;
+                        }
 
-                    @Override
-                    public Either<ResourceKey<DamageType>, DamageType> unwrap() {
-                        return null;
-                    }
+                        @Override
+                        public Optional<ResourceKey<DamageType>> unwrapKey() {
+                            return Optional.empty();
+                        }
 
-                    @Override
-                    public Optional<ResourceKey<DamageType>> unwrapKey() {
-                        return Optional.empty();
-                    }
+                        @Override
+                        public Kind kind() {
+                            return null;
+                        }
 
-                    @Override
-                    public Kind kind() {
-                        return null;
-                    }
-
-                    @Override
-                    public boolean canSerializeIn(HolderOwner<DamageType> p_255833_) {
-                        return false;
-                    }
-                }), 45);
+                        @Override
+                        public boolean canSerializeIn(HolderOwner<DamageType> p_255833_) {
+                            return false;
+                        }
+                    }), 45);
+                }
             }
         }
 
