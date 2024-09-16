@@ -2,10 +2,13 @@ package net.jericko.accessories.item.custom;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
+import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderOwner;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -27,59 +30,88 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
+import org.stringtemplate.v4.misc.Misc;
 
+import javax.swing.*;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class PistolItem extends Item {
+
+    private static boolean reticleExists;
+    private static ReticleEntity reticle;
+    //private static final int range = 50;
+    private int c = 0;
+
     public PistolItem(Properties p_41383_) {super(p_41383_);}
 
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int p_41407_, boolean p_41408_) {
-        super.inventoryTick(stack, level, entity, p_41407_, p_41408_);
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
+        super.inventoryTick(itemStack, level, entity, i, b);
 
-        //
+//        Player player = Minecraft.getInstance().player;
+//        // Creates a Reticle
+//
+//        if(player != null){
+//            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
+//                ItemStack itemstack = ModItems.CHAOSRETICLE.get().getDefaultInstance();
+//                reticle = new ReticleEntity(level, player);
+//                reticle.setItem(itemstack);
+//                reticle.setNoGravity(true);
+//                level.addFreshEntity(reticle);
+//                reticleExists = true;
+//            }
+//
+//            //Removes reticle if not holding pistol
+//
+//            Vec3 pos = player.position();
+//            Vec3 direction = player.getViewVector(1);
+//            if(reticleExists && !player.isHolding(this)){
+//                reticleExists = false;
+//                reticle.kill();
+//            }
+//        }
+
 
     }
 
+
+
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand p_41434_) {
-
-        // Creates a Reticle
-
-        ItemStack itemstack = ModItems.CHAOSRETICLE.get().getDefaultInstance();
-        if (!level.isClientSide) {
-            ReticleEntity reticle = new ReticleEntity(level, player);
-            reticle.setItem(itemstack);
-            reticle.setNoGravity(true);
-            level.addFreshEntity(reticle);
-        }
-
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
         // Shoots gun at targeted entity
 
         level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F,1.0F);
 
-        Vec3 pos = player.position();
+        Vec3 pos = player.getEyePosition();
 
-        for(int range = 1; range<100; range++){
+        for(int range = 0; range <50; range++){
             Vec3 direction = player.getViewVector(1);
             List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x*range, pos.y + direction.y*range, pos.z + direction.z*range));
-            
+            //level.getBlockState(new BlockPos( (int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))) != null
+
+            if(level.getBlockState(new BlockPos((int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))).getBlock() != Blocks.AIR) {
+
+
+            }
             for(Entity i: hi) {
-                if(i != Entity.NULL){
-                    EyeOfEnder e = new EyeOfEnder(level, 1, 1, 1);
-                    e.setPos(player.position());
-                }
+//                if(i.getType() == ModEntities.CHAOSRETICLE.get()){
+//                    continue;
+//                }
+
                 i.hurt(new DamageSource(new Holder<DamageType>() {
                     @Override
                     public DamageType value() {
@@ -139,6 +171,8 @@ public class PistolItem extends Item {
             }
         }
 
-        return super.use(level, player, p_41434_);
+
+        return super.use(level, player, hand);
     }
+
 }

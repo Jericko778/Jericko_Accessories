@@ -2,9 +2,11 @@ package net.jericko.accessories.entity.custom;
 
 import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.item.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemTransform;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -23,6 +25,15 @@ public class ReticleEntity extends ThrowableItemProjectile {
 
     public ReticleEntity(Level level, LivingEntity livingEntity) {
         super(ModEntities.CHAOSRETICLE.get(), livingEntity, level);
+    }
+
+    @Override
+    public void tick() {
+        Player player = Minecraft.getInstance().player;
+        if(player != null){
+            this.setPos(player.getEyePosition().add(player.getViewVector(1).multiply(2,2,2)));
+            super.tick();
+        }
     }
 
     @Override

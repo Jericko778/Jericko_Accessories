@@ -1,15 +1,20 @@
 package net.jericko.accessories.event;
 
 import net.jericko.accessories.Accessories;
+import net.jericko.accessories.client.BulletHudOverlay;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.DashItem;
 import net.jericko.accessories.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -29,6 +34,15 @@ public class ClientEvents {
             }
         }
 
+        @SubscribeEvent
+        public static void renderCrosshair(RenderGuiOverlayEvent event){
+            if(VanillaGuiOverlay.CROSSHAIR.type() == event.getOverlay()){
+                if(Minecraft.getInstance().player.isHolding(ModItems.CHAOSPISTOL.get())){
+                    event.setCanceled(true);
+                }
+            }
+        }
+
     }
     @Mod.EventBusSubscriber(modid = Accessories.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents{
@@ -37,6 +51,10 @@ public class ClientEvents {
             event.register(KeyBinding.DASH);
         }
 
+        @SubscribeEvent
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
+            event.registerAboveAll("bullet", BulletHudOverlay.HUD_BULLETS);
+        }
     }
 
 
