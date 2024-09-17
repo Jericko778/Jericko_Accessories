@@ -17,7 +17,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<ReticleEntity>> CHAOSFOCUSRETICLE =
             ENTITY_TYPES.register("reticle", () -> EntityType.Builder.<ReticleEntity>of(ReticleEntity::new, MobCategory.MISC)
-                    .sized(0.01f,0.01f).build("reticle"));
+                    .sized(0.5f,0.5f).build("reticle"));
 
 
     public static void register(IEventBus eventBus) { ENTITY_TYPES.register(eventBus);}

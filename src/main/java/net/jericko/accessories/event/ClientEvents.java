@@ -31,6 +31,7 @@ public class ClientEvents {
                 player.setDeltaMovement(dashVec);
                 player.getCooldowns().addCooldown(ModItems.DASH.get(), 30);
             }
+
         }
 
         @SubscribeEvent

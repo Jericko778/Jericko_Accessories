@@ -2,6 +2,7 @@ package net.jericko.accessories.item.custom;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
+import net.jericko.accessories.Accessories;
 import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
@@ -20,10 +21,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +42,11 @@ import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.stringtemplate.v4.misc.Misc;
 
@@ -47,10 +55,12 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+@Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
 public class PistolItem extends Item {
 
-    private static boolean reticleExists;
+    private static boolean reticleExists, focus;
     private static ReticleEntity reticle;
+    private Entity focusedEntity;
     //private static final int range = 50;
     private int c = 0;
 
@@ -67,7 +77,7 @@ public class PistolItem extends Item {
 
             // Creates a Reticle
             // Changes to focused reticle if focusing
-            if (!level.isClientSide && !reticleExists && player.isHolding(this) /* && Chaos Glasses equipped */) {
+            if (!level.isClientSide && !reticleExists && player.isHolding(this) && focus/* && Chaos Glasses equipped */) {
                 ItemStack itemstack = ModItems.CHAOSFOCUSRETICLE.get().getDefaultInstance();
                 reticle = new ReticleEntity(level, player);
                 reticle.setItem(itemstack);
@@ -76,17 +86,51 @@ public class PistolItem extends Item {
                 reticleExists = true;
             }
 
+            Vec3 pos = player.getEyePosition();
+            Vec3 direction = player.getViewVector(1);
+            if(reticleExists && focus){
+                List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x - 50, pos.y - 50, pos.z - 50, pos.x + 50, pos.y + 50, pos.z + 50));
+
+                Vec3 closestEntity = new Vec3(1000,1000,1000);
+                for (Entity e : hi) {
+                    if (e.getType() == ModEntities.CHAOSFOCUSRETICLE.get() || e.equals(player)) {
+                        continue;
+                    }
+                    System.out.println(e.getName());
+                    if(e != Entity.NULL){
+                        if((e.position().subtract(pos)).length() < (closestEntity.subtract(pos)).length()){
+                            closestEntity = e.position();
+                            focusedEntity = e;
+                        }
+                    }
+                }
+                Vec3 retPos = pos.add((focusedEntity.getEyePosition().subtract(pos).normalize()).multiply(2,2,2));
+                reticle.setPos(retPos.subtract(new Vec3(0,0.3,0)));
+            }
+
+
             //Removes reticle if not holding pistol
 
-            Vec3 pos = player.position();
-            Vec3 direction = player.getViewVector(1);
-            if(reticleExists && !player.isHolding(this)){
+            if(reticleExists && (!player.isHolding(this) || !focus)){
                 reticleExists = false;
                 reticle.kill();
             }
           }
 
 
+    }
+
+    @SubscribeEvent
+    public static void StartFocus(InputEvent.Key event){
+        Player player = Minecraft.getInstance().player;
+        if(player != null && event.getKey() == 340){
+            if(event.getAction() == GLFW.GLFW_PRESS){
+                focus = true;
+            }
+            if(event.getAction() == GLFW.GLFW_RELEASE){
+                focus = false;
+            }
+        }
     }
 
 
@@ -102,76 +146,35 @@ public class PistolItem extends Item {
         Vec3 pos = player.getEyePosition();
         Vec3 direction = player.getViewVector(1);
 
-        for(int range = 0; range <50; range++){
-            List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x*range, pos.y + direction.y*range, pos.z + direction.z*range));
+        if(focus){
+            focusedEntity.hurt(player.damageSources().generic(), 60);
+        }
 
-            if(level.getBlockState(new BlockPos((int)(pos.x + direction.x*range), (int)(pos.y + direction.y*range), (int)(pos.z + direction.z*range))).getBlock() != Blocks.AIR) {
-                break;
-            }
-            for(Entity e: hi) {
-                if(e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()){
-                    continue;
+        if(!focus) {
+            for (int range = 1; range < 50; range++) {
+                List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x * range, pos.y + direction.y * range, pos.z + direction.z * range));
+
+                for (Entity e : hi) {
+                    if (e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()) {
+                        continue;
+                    }
+
+                    boolean blocked = false;
+
+                    for (int i = 0; i < range; i++) {
+                        Entity b = new ReticleEntity(level, player);
+                        b.setPos(pos.add(direction.multiply(i, i, i)));
+                        level.addFreshEntity(b);
+                        if (b.isColliding(b.blockPosition(), b.getBlockStateOn())) {
+                            blocked = true;
+                        }
+                        b.kill();
+                    }
+
+                    if (!blocked) {
+                        e.hurt(player.damageSources().generic(), 45);
+                    }
                 }
-                boolean blocked = false;
-                for(int i = 0; i<range; i++){
-                }
-
-                e.hurt(new DamageSource(new Holder<DamageType>() {
-                    @Override
-                    public DamageType value() {
-                        return null;
-                    }
-
-                    @Override
-                    public boolean isBound() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean is(ResourceLocation p_205713_) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean is(ResourceKey<DamageType> p_205712_) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean is(Predicate<ResourceKey<DamageType>> p_205711_) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean is(TagKey<DamageType> p_205705_) {
-                        return false;
-                    }
-
-                    @Override
-                    public Stream<TagKey<DamageType>> tags() {
-                        return Stream.empty();
-                    }
-
-                    @Override
-                    public Either<ResourceKey<DamageType>, DamageType> unwrap() {
-                        return null;
-                    }
-
-                    @Override
-                    public Optional<ResourceKey<DamageType>> unwrapKey() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public Kind kind() {
-                        return null;
-                    }
-
-                    @Override
-                    public boolean canSerializeIn(HolderOwner<DamageType> p_255833_) {
-                        return false;
-                    }
-                }), 45);
             }
         }
 
