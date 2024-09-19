@@ -3,6 +3,7 @@ package net.jericko.accessories.item.custom;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Either;
 import net.jericko.accessories.Accessories;
+import net.jericko.accessories.client.ClientBulletData;
 import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.entity.custom.ReticleEntity;
 import net.jericko.accessories.item.ModItems;
@@ -72,10 +73,9 @@ import java.util.stream.Stream;
 @Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
 public class PistolItem extends Item implements GeoItem {
 
-    private static boolean reticleExists, focus, firing;
+    private static boolean reticleExists, focus, firing, reloading, stopReload, fired;
     private static ReticleEntity reticle;
     private Entity focusedEntity;
-    //private static final int range = 50;
     private int c = 0;
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -132,6 +132,9 @@ public class PistolItem extends Item implements GeoItem {
                 }
 
             }
+            else if(!focus && firing){
+
+            }
 
 
             //Removes reticle if not holding pistol
@@ -141,6 +144,27 @@ public class PistolItem extends Item implements GeoItem {
                 reticle.kill();
             }
           }
+
+        if(reloading){
+            if(ClientBulletData.getBullets() != 6){
+                c++;
+                if(c % 10 == 0){
+                    ClientBulletData.reloadBullet();
+                }
+            }
+            else{
+                reloading = false;
+                stopReload = true;
+                c = 0;
+            }
+
+//            if(player != null && player.getDeltaMovement() != Vec3.ZERO){
+//                reloading = false;
+//                stopReload = true;
+//                c = 0;
+//            }
+
+        }
 
 
     }
@@ -159,6 +183,26 @@ public class PistolItem extends Item implements GeoItem {
         }
     }
 
+    @SubscribeEvent
+    public static void BulletControls(InputEvent.Key event){
+        Player player = Minecraft.getInstance().player;
+        if(player != null && event.getKey() == GLFW.GLFW_KEY_R){
+            if(event.getAction() == GLFW.GLFW_PRESS){
+                reloading = true;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void MouseCheck(InputEvent.MouseButton event){
+        Player player = Minecraft.getInstance().player;
+        if(player != null && event.getButton() == 1){
+            if(event.getAction() == GLFW.GLFW_RELEASE){
+                fired = false;
+            }
+        }
+    }
+
 
 
     @Override
@@ -166,39 +210,42 @@ public class PistolItem extends Item implements GeoItem {
 
         // Shoots gun at targeted entity
 
-        level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F,1.0F);
-        firing = true;
+        if(ClientBulletData.hasBullet() && !reloading && !fired) {
+            level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F);
+            firing = true;
+            fired = true;
 
-        Vec3 pos = player.getEyePosition();
-        Vec3 direction = player.getViewVector(1);
+            Vec3 pos = player.getEyePosition();
+            Vec3 direction = player.getViewVector(1);
 
-        if(focus){
-            focusedEntity.hurt(player.damageSources().generic(), 60);
-        }
+            if (focus) {
+                focusedEntity.hurt(player.damageSources().generic(), 60);
+            }
 
-        if(!focus) {
-            for (int range = 1; range < 40; range++) {
-                List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x * range, pos.y + direction.y * range, pos.z + direction.z * range));
+            if (!focus) {
+                for (int range = 1; range < 40; range++) {
+                    List<Mob> hi = level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, player, new AABB(pos.x, pos.y, pos.z, pos.x + direction.x * range, pos.y + direction.y * range, pos.z + direction.z * range));
 
-                for (Entity e : hi) {
-                    if (e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()) {
-                        continue;
-                    }
-
-                    boolean blocked = false;
-
-                    for (int i = 0; i < range; i++) {
-                        Entity b = new ReticleEntity(level, player);
-                        b.setPos(pos.add(direction.multiply(i, i, i)));
-                        level.addFreshEntity(b);
-                        if (b.isColliding(b.blockPosition(), b.getBlockStateOn())) {
-                            blocked = true;
+                    for (Entity e : hi) {
+                        if (e.getType() == ModEntities.CHAOSFOCUSRETICLE.get()) {
+                            continue;
                         }
-                        b.kill();
-                    }
 
-                    if (!blocked) {
-                        e.hurt(player.damageSources().generic(), 45);
+                        boolean blocked = false;
+
+                        for (int i = 0; i < range; i++) {
+                            Entity b = new ReticleEntity(level, player);
+                            b.setPos(pos.add(direction.multiply(i, i, i)));
+                            level.addFreshEntity(b);
+                            if (b.isColliding(b.blockPosition(), b.getBlockStateOn())) {
+                                blocked = true;
+                            }
+                            b.kill();
+                        }
+
+                        if (!blocked) {
+                            e.hurt(player.damageSources().generic(), 45);
+                        }
                     }
                 }
             }
@@ -212,13 +259,22 @@ public class PistolItem extends Item implements GeoItem {
         return focus;
     }
 
-
     private PlayState predicate(AnimationState animationState) {
-        if(firing){
+        if(firing && !reloading){
             animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.fire", Animation.LoopType.PLAY_ONCE));
             animationState.setControllerSpeed(2);
+            ClientBulletData.useBullet();
             animationState.resetCurrentAnimation();
             firing = false;
+        }
+        if(reloading){
+            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.reload", Animation.LoopType.LOOP));
+            animationState.setControllerSpeed(2);
+        }
+        if(stopReload){
+            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.spin", Animation.LoopType.PLAY_ONCE));
+            animationState.resetCurrentAnimation();
+            stopReload = false;
         }
         return PlayState.CONTINUE;
     }

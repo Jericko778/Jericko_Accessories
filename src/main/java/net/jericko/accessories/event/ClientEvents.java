@@ -1,6 +1,7 @@
 package net.jericko.accessories.event;
 
 import net.jericko.accessories.Accessories;
+import net.jericko.accessories.client.BulletOverlay;
 import net.jericko.accessories.client.ReticleOverlay;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.DashItem;
@@ -69,7 +70,8 @@ public class ClientEvents {
 
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
-            event.registerAboveAll("bullet", ReticleOverlay.HUD_RETICLE);
+            event.registerAboveAll("reticle", ReticleOverlay.HUD_RETICLE);
+            event.registerAboveAll("bullets", BulletOverlay.BULLET_OVERLAY);
         }
 
     }
