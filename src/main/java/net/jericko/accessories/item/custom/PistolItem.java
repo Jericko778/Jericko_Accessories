@@ -76,7 +76,8 @@ public class PistolItem extends Item implements GeoItem {
     private static boolean reticleExists, focus, firing, reloading, stopReload, fired;
     private static ReticleEntity reticle;
     private Entity focusedEntity;
-    private int c = 0;
+    private static int c = 0, c2 = 0;
+    private static Vec3 playerPos;
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -158,11 +159,11 @@ public class PistolItem extends Item implements GeoItem {
                 c = 0;
             }
 
-//            if(player != null && player.getDeltaMovement() != Vec3.ZERO){
-//                reloading = false;
-//                stopReload = true;
-//                c = 0;
-//            }
+            if(player != null && player.position().subtract(playerPos).length() > 0){
+                reloading = false;
+                stopReload = true;
+                c = 0;
+            }
 
         }
 
@@ -187,8 +188,9 @@ public class PistolItem extends Item implements GeoItem {
     public static void BulletControls(InputEvent.Key event){
         Player player = Minecraft.getInstance().player;
         if(player != null && event.getKey() == GLFW.GLFW_KEY_R){
-            if(event.getAction() == GLFW.GLFW_PRESS){
+            if(event.getAction() == GLFW.GLFW_PRESS && !reloading){
                 reloading = true;
+                playerPos = player.position();
             }
         }
     }
@@ -198,7 +200,8 @@ public class PistolItem extends Item implements GeoItem {
         Player player = Minecraft.getInstance().player;
         if(player != null && event.getButton() == 1){
             if(event.getAction() == GLFW.GLFW_RELEASE){
-                fired = false;
+                fired = true;
+                c2 = 0;
             }
         }
     }
@@ -210,11 +213,9 @@ public class PistolItem extends Item implements GeoItem {
 
         // Shoots gun at targeted entity
 
-        if(ClientBulletData.hasBullet() && !reloading && !fired) {
+        if(ClientBulletData.hasBullet() && !reloading && fired && c2 < 2) {
             level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F);
             firing = true;
-            fired = true;
-
             Vec3 pos = player.getEyePosition();
             Vec3 direction = player.getViewVector(1);
 
@@ -249,8 +250,8 @@ public class PistolItem extends Item implements GeoItem {
                     }
                 }
             }
+            c2++;
         }
-
 
         return super.use(level, player, hand);
     }
