@@ -39,7 +39,6 @@ public class SpeedItem extends Item implements ICurioItem {
     private int counter;
 
     @Override
-
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         Player player = (Player) slotContext.entity();
         lightning = slotContext.entity().level();

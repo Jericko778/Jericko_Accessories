@@ -20,6 +20,7 @@ public class BulletOverlay {
         Player player = Minecraft.getInstance().player;
         int x = screenWidth / 2;
         int y = screenHeight;
+        int bulletSize = 12;
 
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -29,10 +30,10 @@ public class BulletOverlay {
         if(player.isHolding(ModItems.CHAOSPISTOL.get())){
             for (int i = 6; i > 0; i--) {
                 if(ClientBulletData.getBullets() < i){
-                    guiGraphics.blit(BULLET_EMPTY, x - 94 + (i * 9), y - 60, 0, 0, 12, 12, 12, 12);//(int)(screenWidth*0.1f), (int)(screenHeight*0.2f), (int)(screenWidth*0.1f), (int)(screenHeight*0.2f));
+                    guiGraphics.blit(BULLET_EMPTY, x - 100 + (i * 9), y - 50, 0, 0, bulletSize, bulletSize, bulletSize, bulletSize);//(int)(screenWidth*0.1f), (int)(screenHeight*0.2f), (int)(screenWidth*0.1f), (int)(screenHeight*0.2f));
                 }
                 else{
-                    guiGraphics.blit(BULLET_FULL, x - 94 + (i * 9), y - 58, 0, 0, 12, 12, 12, 12);//(int)(screenWidth*0.1f), (int)(screenHeight*0.2f), (int)(screenWidth*0.1f), (int)(screenHeight*0.2f));
+                    guiGraphics.blit(BULLET_FULL, x - 100 + (i * 9), y - 48, 0, 0, bulletSize, bulletSize, bulletSize, bulletSize);//(int)(screenWidth*0.1f), (int)(screenHeight*0.2f), (int)(screenWidth*0.1f), (int)(screenHeight*0.2f));
                 }
             }
         }

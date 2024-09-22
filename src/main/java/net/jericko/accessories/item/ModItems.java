@@ -20,7 +20,7 @@ public class ModItems {
     public static final RegistryObject<Item> CHAOSPISTOL = ITEMS.register("crescentmoon", () -> new PistolItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CHAOSFOCUSRETICLE = ITEMS.register("chaosfocusreticle", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CURSEDBALL = ITEMS.register("cursedball", () -> new SpinBallItem(new Item.Properties().stacksTo(1)));
-
+    public static final RegistryObject<Item> CHAOSSHADES = ITEMS.register("chaosshades", () -> new ShadesItem(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);

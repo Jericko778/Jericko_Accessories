@@ -262,6 +262,7 @@ public class PistolItem extends Item implements GeoItem {
 
     private PlayState predicate(AnimationState animationState) {
         if(firing && !reloading){
+            animationState.getController().forceAnimationReset();
             animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.fire", Animation.LoopType.PLAY_ONCE));
             animationState.setControllerSpeed(2);
             ClientBulletData.useBullet();
@@ -269,12 +270,11 @@ public class PistolItem extends Item implements GeoItem {
             firing = false;
         }
         if(reloading){
-            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.reload", Animation.LoopType.LOOP));
-            animationState.setControllerSpeed(2);
+            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.reload", Animation.LoopType.HOLD_ON_LAST_FRAME));
         }
         if(stopReload){
-            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.spin", Animation.LoopType.PLAY_ONCE));
-            animationState.resetCurrentAnimation();
+            animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.spin", Animation.LoopType.HOLD_ON_LAST_FRAME));
+            animationState.setControllerSpeed(3);
             stopReload = false;
         }
         return PlayState.CONTINUE;
