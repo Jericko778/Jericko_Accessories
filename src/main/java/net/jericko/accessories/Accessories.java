@@ -3,6 +3,7 @@ package net.jericko.accessories;
 import com.mojang.logging.LogUtils;
 import net.jericko.accessories.block.ModBlocks;
 import net.jericko.accessories.entity.ModEntities;
+import net.jericko.accessories.entity.client.CursedBallRenderer;
 import net.jericko.accessories.item.ModCreativeModeTabs;
 import net.jericko.accessories.item.ModItems;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -94,6 +95,7 @@ public class Accessories
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             EntityRenderers.register(ModEntities.CHAOSFOCUSRETICLE.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntities.CURSEDBALL.get(), CursedBallRenderer::new);
         }
     }
 }

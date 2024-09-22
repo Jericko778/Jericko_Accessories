@@ -1,4 +1,4 @@
-package net.jericko.accessories.entity;
+package net.jericko.accessories.entity.custom;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

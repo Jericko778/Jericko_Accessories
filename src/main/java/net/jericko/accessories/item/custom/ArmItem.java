@@ -1,7 +1,7 @@
 package net.jericko.accessories.item.custom;
 
 import com.mojang.datafixers.util.Either;
-import net.jericko.accessories.entity.KnuckleBlasterExplosion;
+import net.jericko.accessories.entity.custom.KnuckleBlasterExplosion;
 import net.jericko.accessories.item.client.KnuckleblasterRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
