@@ -2,7 +2,6 @@ package net.jericko.accessories.item.client;
 
 import net.jericko.accessories.Accessories;
 import net.jericko.accessories.item.custom.PistolItem;
-import net.jericko.accessories.item.custom.SpinBallItem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

@@ -6,8 +6,8 @@ import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.entity.client.CursedBallRenderer;
 import net.jericko.accessories.item.ModCreativeModeTabs;
 import net.jericko.accessories.item.ModItems;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.jericko.accessories.item.client.ChaosShadesRenderer;
+import net.minecraft.client.renderer.entity.*;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -96,6 +97,7 @@ public class Accessories
         {
             EntityRenderers.register(ModEntities.CHAOSFOCUSRETICLE.get(), ThrownItemRenderer::new);
             EntityRenderers.register(ModEntities.CURSEDBALL.get(), CursedBallRenderer::new);
+            CuriosRendererRegistry.register(ModItems.CHAOSSHADES.get(), ChaosShadesRenderer::new);
         }
     }
 }

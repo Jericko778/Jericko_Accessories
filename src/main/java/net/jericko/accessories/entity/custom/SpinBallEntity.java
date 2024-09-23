@@ -1,5 +1,6 @@
 package net.jericko.accessories.entity.custom;
 
+import net.jericko.accessories.entity.ModEntities;
 import net.jericko.accessories.item.client.CursedBallRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundEvents;
@@ -33,10 +34,13 @@ public class SpinBallEntity extends ThrownTrident implements GeoEntity {
         super(p_37561_, p_37562_);
     }
 
-    public SpinBallEntity(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
-        super(p_37569_, p_37570_, p_37571_);
+    public SpinBallEntity(Level level) {
+        super(ModEntities.CURSEDBALL.get(), level);
     }
-    
+
+    public SpinBallEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+        super(level, livingEntity, itemStack);
+    }
 
     private PlayState predicate(AnimationState animationState) {
         animationState.getController().setAnimation(RawAnimation.begin().then("animation.model.spin", Animation.LoopType.LOOP));

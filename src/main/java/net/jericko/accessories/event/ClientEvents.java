@@ -60,6 +60,7 @@ public class ClientEvents {
         }
 
 
+
     }
     @Mod.EventBusSubscriber(modid = Accessories.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents{
