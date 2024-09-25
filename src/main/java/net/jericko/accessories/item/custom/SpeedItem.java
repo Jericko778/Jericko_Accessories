@@ -50,25 +50,26 @@ public class SpeedItem extends Item implements ICurioItem {
         lightning = slotContext.entity().level();
         hasEffect = player.hasEffect(MobEffects.MOVEMENT_SPEED);
 
-
         if(override){
             if(counter == 0){
                 LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, lightning);
                 bolt.setVisualOnly(true);
                 bolt.setPos(player.position());
                 lightning.addFreshEntity(bolt);
-                player.getEffect(MobEffects.MOVEMENT_SPEED).update(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 19));
-
+                player.removeEffect(MobEffects.MOVEMENT_SPEED);
+            }
+            if(counter == 1){
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 19));
             }
             counter++;
             if(counter % 100 == 0){
                 counter = 0;
                 override = false;
-                player.getEffect(MobEffects.MOVEMENT_SPEED).update(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 3));
 
             }
         }
         else if(!hasEffect){
+            player.removeEffect(MobEffects.MOVEMENT_SPEED);
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 2));
         }
 
@@ -85,7 +86,7 @@ public class SpeedItem extends Item implements ICurioItem {
     @SubscribeEvent
     public static void LightningBoost(InputEvent.Key event){
         Player player = Minecraft.getInstance().player;
-        if(player != null && hasEffect && !startCooldown && event.getKey() == 341 && event.getAction() == GLFW.GLFW_PRESS){
+        if(player != null && hasEffect && !startCooldown && event.getKey() == Minecraft.getInstance().options.keySprint.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS){
             override = true;
             startCooldown = true;
             player.getCooldowns().addCooldown(ModItems.BOOTS.get(), 150);

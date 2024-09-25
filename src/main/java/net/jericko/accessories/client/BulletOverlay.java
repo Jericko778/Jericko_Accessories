@@ -3,6 +3,7 @@ package net.jericko.accessories.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.jericko.accessories.Accessories;
 import net.jericko.accessories.item.ModItems;
+import net.jericko.accessories.item.custom.ShadesItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ public class BulletOverlay {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, BULLET_FULL);
 
-        if(player.isHolding(ModItems.CHAOSPISTOL.get())){
+        if(player.isHolding(ModItems.CHAOSPISTOL.get()) && ShadesItem.isShaded()){
             for (int i = 6; i > 0; i--) {
                 if(ClientBulletData.getBullets() < i){
                     guiGraphics.blit(BULLET_EMPTY, x - 100 + (i * 9), y - 50, 0, 0, bulletSize, bulletSize, bulletSize, bulletSize);//(int)(screenWidth*0.1f), (int)(screenHeight*0.2f), (int)(screenWidth*0.1f), (int)(screenHeight*0.2f));

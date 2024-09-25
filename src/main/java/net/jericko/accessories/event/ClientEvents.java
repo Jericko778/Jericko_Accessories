@@ -8,7 +8,9 @@ import net.jericko.accessories.item.custom.DashItem;
 import net.jericko.accessories.item.custom.PistolItem;
 import net.jericko.accessories.util.KeyBinding;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -19,6 +21,7 @@ import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
+import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,6 +32,7 @@ public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Accessories.MOD_ID, value = Dist.CLIENT)
     public static class ClientForgeEvents{
 
+        public static ModelPart head;
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
             Player player = Minecraft.getInstance().player;
@@ -57,6 +61,15 @@ public class ClientEvents {
             if(Minecraft.getInstance().player.isHolding(ModItems.CHAOSPISTOL.get()) && PistolItem.getFocus()){
                 event.setFOV(event.getFOV()*0.9);//Mth.lerp(0.02, (float)event.getFOV(), (float)(event.getFOV()*0.8)));
             }
+        }
+
+        @SubscribeEvent
+        public static void shades(RenderPlayerEvent event){
+            head = event.getRenderer().getModel().getHead();
+        }
+
+        public static ModelPart getHead(){
+            return head;
         }
 
 

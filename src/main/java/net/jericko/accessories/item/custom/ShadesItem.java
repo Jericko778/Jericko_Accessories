@@ -1,5 +1,6 @@
 package net.jericko.accessories.item.custom;
 
+import net.jericko.accessories.event.ClientEvents;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.client.ChaosShadesRenderer;
 import net.jericko.accessories.item.client.CrescentMoonRenderer;
@@ -23,6 +24,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.util.RenderUtils;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
+import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.function.Consumer;
@@ -31,6 +33,7 @@ public class ShadesItem extends Item implements GeoItem, ICurioItem, Equipable {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private ItemStack currentHead;
+    private static boolean shadedCurio, shadedHead, shaded;
 
     public ShadesItem(Properties p_41383_) {
         super(p_41383_);
@@ -48,32 +51,31 @@ public class ShadesItem extends Item implements GeoItem, ICurioItem, Equipable {
     }
 
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int p_41407_, boolean p_41408_) {
         Player player = Minecraft.getInstance().player;
-        if(!slotContext.visible()){
-            player.setItemSlot(EquipmentSlot.HEAD, currentHead);
+        if(player.getItemBySlot(EquipmentSlot.HEAD).getDisplayName().equals(itemStack.getDisplayName())){
+            shadedHead = true;
         }
+        else
+        {
+            shadedHead = false;
+        }
+    }
+
+    @Override
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
+        shadedCurio = true;
+
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        Player player = Minecraft.getInstance().player;
-        player.setItemSlot(EquipmentSlot.HEAD, currentHead);
+        shadedCurio = false;
     }
 
-    @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean b) {
-        super.inventoryTick(itemStack, level, entity, i, b);
-        Player player = Minecraft.getInstance().player;
-        if(!player.getItemBySlot(EquipmentSlot.HEAD).getDisplayName().equals(itemStack.getDisplayName())){
-            currentHead = player.getItemBySlot(EquipmentSlot.HEAD);
-        }
-//        if(player.equipmentHasChanged(itemStack, player.getItemBySlot(EquipmentSlot.HEAD))){
-//            currentHead = player.getItemBySlot(EquipmentSlot.HEAD);
-//        }
-//        player.onEquipItem(EquipmentSlot.HEAD, itemStack, player.getItemBySlot(EquipmentSlot.HEAD));
-
-
+    public static boolean isShaded(){
+        shaded = shadedHead || shadedCurio;
+        return shaded;
     }
 
     @Override
