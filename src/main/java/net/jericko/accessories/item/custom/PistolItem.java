@@ -96,7 +96,7 @@ public class PistolItem extends Item implements GeoItem {
 
             // Creates a Reticle
             // Changes to focused reticle if focusing
-            if (!level.isClientSide && !reticleExists && player.isHolding(this) && focus/* && Chaos Glasses equipped */) {
+            if (ShadesItem.isShaded() && !level.isClientSide && !reticleExists && player.isHolding(this) && focus/* && Chaos Glasses equipped */) {
                 ItemStack itemstack = ModItems.CHAOSFOCUSRETICLE.get().getDefaultInstance();
                 reticle = new ReticleEntity(level, player);
                 reticle.setItem(itemstack);
@@ -131,9 +131,6 @@ public class PistolItem extends Item implements GeoItem {
                     Vec3 retPos = pos.add((focusedEntity.getEyePosition().subtract(pos).normalize()).multiply(2,2,2));
                     reticle.setPos(retPos.subtract(new Vec3(0,0.3,0)));
                 }
-
-            }
-            else if(!focus && firing){
 
             }
 
@@ -187,7 +184,7 @@ public class PistolItem extends Item implements GeoItem {
     @SubscribeEvent
     public static void BulletControls(InputEvent.Key event){
         Player player = Minecraft.getInstance().player;
-        if(player != null && event.getKey() == GLFW.GLFW_KEY_R){
+        if(player != null && event.getKey() == GLFW.GLFW_KEY_R && player.isHolding(ModItems.CHAOSPISTOL.get())){
             if(event.getAction() == GLFW.GLFW_PRESS && !reloading){
                 reloading = true;
                 playerPos = player.position();

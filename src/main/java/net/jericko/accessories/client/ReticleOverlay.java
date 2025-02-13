@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.jericko.accessories.Accessories;
 import net.jericko.accessories.item.ModItems;
 import net.jericko.accessories.item.custom.PistolItem;
+import net.jericko.accessories.item.custom.ShadesItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +40,7 @@ public class ReticleOverlay {
         RenderSystem.setShaderTexture(0,RETICLE);
 
 
-        if(player != null && player.isHolding(ModItems.CHAOSPISTOL.get()) && !focus){
+        if(player != null && player.isHolding(ModItems.CHAOSPISTOL.get()) && !focus && ShadesItem.isShaded()){
 
 //            Vec3 pos = player.getEyePosition();
 //            Vec3 direction = player.getViewVector(1);
