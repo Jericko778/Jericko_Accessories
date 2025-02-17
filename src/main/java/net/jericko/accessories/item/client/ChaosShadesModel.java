@@ -13,7 +13,7 @@ public class ChaosShadesModel extends GeoModel<ShadesItem>{
 
     @Override
     public ResourceLocation getTextureResource(ShadesItem animatable) {
-        return new ResourceLocation(Accessories.MOD_ID, "textures/item/glasses_orange.png");
+        return new ResourceLocation(Accessories.MOD_ID, "textures/item/chaosshades.png");
     }
 
     @Override

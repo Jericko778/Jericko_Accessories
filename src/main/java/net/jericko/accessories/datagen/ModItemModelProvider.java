@@ -22,6 +22,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CLOUD_IN_A_BOTTLE);
         simpleItem(ModItems.BOOTS);
         simpleItem(ModItems.CHAOSFOCUSRETICLE);
+        simpleItem(ModItems.MIMICRYGIFT);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){

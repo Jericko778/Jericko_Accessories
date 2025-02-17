@@ -2,6 +2,7 @@ package net.jericko.accessories.item;
 
 import net.jericko.accessories.Accessories;
 import net.jericko.accessories.item.custom.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
@@ -24,6 +25,7 @@ public class ModItems {
     public static final RegistryObject<Item> CHAOSFOCUSRETICLE = ITEMS.register("chaosfocusreticle", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CURSEDBALL = ITEMS.register("cursedball", () -> new SpinBallItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CHAOSSHADES = ITEMS.register("chaosshades", () -> new ShadesItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> MIMICRYGIFT = ITEMS.register("mimicry_gift", () -> new MimicryGift(new Item.Properties().stacksTo(1), Attributes.MAX_HEALTH, 1));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
