@@ -23,6 +23,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.BOOTS);
         simpleItem(ModItems.CHAOSFOCUSRETICLE);
         simpleItem(ModItems.MIMICRYGIFT);
+        simpleItem(ModItems.SMILEGIFT);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){

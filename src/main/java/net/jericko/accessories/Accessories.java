@@ -87,6 +87,7 @@ public class Accessories
             event.accept(ModItems.CURSEDBALL);
             event.accept(ModItems.CHAOSSHADES);
             event.accept(ModItems.MIMICRYGIFT);
+            event.accept(ModItems.SMILEGIFT);
         }
         if(event.getTab() == ModCreativeModeTabs.GUILTYGEAR_TAB.get()){
             event.accept(ModItems.CHAOSPISTOL);
