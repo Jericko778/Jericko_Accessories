@@ -21,7 +21,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 @Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
 public class DoubleJumpItem extends Item implements ICurioItem {
-    public static int uses;
+    private int uses;
     public DoubleJumpItem(Properties p_41383_) {
         super(p_41383_);
         this.uses = 0;
@@ -46,11 +46,11 @@ public class DoubleJumpItem extends Item implements ICurioItem {
     }
 
     @SubscribeEvent
-    public static void doubleJump(InputEvent.Key event){
+    public void doubleJump(InputEvent.Key event){
         Player player = Minecraft.getInstance().player;
 
-        if(player != null && !player.onGround() && uses > 0 && event.getKey() == 32 && event.getAction() == GLFW.GLFW_PRESS){
-            uses--;
+        if(player != null && !player.onGround() && this.uses > 0 && event.getKey() == 32 && event.getAction() == GLFW.GLFW_PRESS){
+            this.uses--;
 
             Vec3 vec3 = player.getDeltaMovement();
             player.setDeltaMovement(vec3.x, (0.42F + player.getJumpBoostPower()), vec3.z);
