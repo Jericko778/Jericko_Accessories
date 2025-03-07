@@ -48,6 +48,12 @@ public class ClientEvents {
         }
 
         @SubscribeEvent
+        public static void onClientTick(TickEvent.ClientTickEvent tick){
+
+        }
+
+
+        @SubscribeEvent
         public static void renderCrosshair(RenderGuiOverlayEvent event){
             if(VanillaGuiOverlay.CROSSHAIR.type() == event.getOverlay()){
                 if(Minecraft.getInstance().player.isHolding(ModItems.CHAOSPISTOL.get())){

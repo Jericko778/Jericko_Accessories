@@ -2,11 +2,13 @@ package net.jericko.accessories.item.custom;
 
 import net.jericko.accessories.Accessories;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,14 +24,25 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 @Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
 public class DoubleJumpItem extends Item implements ICurioItem {
     private int uses;
+    private boolean released;
     public DoubleJumpItem(Properties p_41383_) {
         super(p_41383_);
         this.uses = 0;
+        released = true;
     }
 
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        if(uses == 0 && slotContext.entity().onGround()){
+        LocalPlayer player = Minecraft.getInstance().player;
+
+        assert player != null;
+        if ((player.onGround() || player.onClimbable()) && (!player.isInWater())) {
+            released = false;
             uses = 1;
+        } else if (!player.input.jumping) {
+            released = true;
+        } else if (!player.getAbilities().flying && uses > 0 && released) {
+            this.doubleJump(player);
+            uses = 0;
         }
     }
 
@@ -45,12 +58,8 @@ public class DoubleJumpItem extends Item implements ICurioItem {
         uses = 0;
     }
 
-    @SubscribeEvent
-    public void doubleJump(InputEvent.Key event){
-        Player player = Minecraft.getInstance().player;
-
-        if(player != null && !player.onGround() && this.uses > 0 && event.getKey() == 32 && event.getAction() == GLFW.GLFW_PRESS){
-            this.uses--;
+    public void doubleJump(Player player){
+        this.uses--;
 
             Vec3 vec3 = player.getDeltaMovement();
             player.setDeltaMovement(vec3.x, (0.42F + player.getJumpBoostPower()), vec3.z);
@@ -58,8 +67,5 @@ public class DoubleJumpItem extends Item implements ICurioItem {
                 float f = player.getYRot() * 0.017453292F;
                 player.setDeltaMovement(player.getDeltaMovement().add((-Mth.sin(f) * 0.2F), 0.0, (Mth.cos(f) * 0.2F)));
             }
-       }
     }
-
-
 }
