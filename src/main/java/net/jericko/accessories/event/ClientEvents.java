@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -37,12 +38,10 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event){
             Player player = Minecraft.getInstance().player;
+            Level level = player.level();
 
-            if(KeyBinding.DASH.consumeClick() && DashItem.isEquipped && !player.getCooldowns().isOnCooldown(ModItems.DASH.get())){
-                Vec3 playerLook = player.getViewVector(1);
-                Vec3 dashVec = new Vec3(playerLook.x(), playerLook.y(), playerLook.z());
-                player.setDeltaMovement(dashVec);
-                player.getCooldowns().addCooldown(ModItems.DASH.get(), 30);
+            if(KeyBinding.DASH.consumeClick()){
+                DashItem.dash(level, player);
             }
 
         }

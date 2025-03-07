@@ -7,7 +7,9 @@ import net.jericko.accessories.item.ModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,7 +19,9 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -35,70 +39,28 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 @Mod.EventBusSubscriber(modid = Accessories.MOD_ID)
-public class SpeedItem extends Item implements ICurioItem {
+public class SpeedItem extends BuffAccessory implements ICurioItem {
     //TODO: Add particles
-    public SpeedItem(Properties p_41383_) {
-        super(p_41383_);
+    public SpeedItem(Properties properties, Attribute[] attribute, int[] born, double[] amount) {
+        super(properties, attribute, born, amount);
     }
-    private static Level lightning = null;
-    private static boolean hasEffect, override, startCooldown;
-    private int counter, cooldown;
+    private Level lightning = null;
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         Player player = (Player) slotContext.entity();
         lightning = slotContext.entity().level();
-        hasEffect = player.hasEffect(MobEffects.MOVEMENT_SPEED);
 
-        if(override){
-            if(counter == 0){
+        if (player.isShiftKeyDown() && !lightning.isClientSide()) {
+            if (!player.getCooldowns().isOnCooldown(this.asItem())) {
                 LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, lightning);
                 bolt.setVisualOnly(true);
                 bolt.setPos(player.position());
                 lightning.addFreshEntity(bolt);
                 player.removeEffect(MobEffects.MOVEMENT_SPEED);
-            }
-            if(counter == 1){
-                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 19));
-            }
-            counter++;
-            if(counter % 100 == 0){
-                counter = 0;
-                override = false;
-
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 5));
+                player.getCooldowns().addCooldown(this.asItem(), 500);
             }
         }
-        else if(!hasEffect){
-            player.removeEffect(MobEffects.MOVEMENT_SPEED);
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, -1, 2));
-        }
-
-        if(startCooldown){
-            cooldown++;
-            if(cooldown % 300 == 0){
-                startCooldown = false;
-            }
-        }
-
-    }
-
-
-    @SubscribeEvent
-    public static void LightningBoost(InputEvent.Key event){
-        Player player = Minecraft.getInstance().player;
-        if(player != null && hasEffect && !startCooldown && event.getKey() == Minecraft.getInstance().options.keySprint.getKey().getValue() && event.getAction() == GLFW.GLFW_PRESS){
-            override = true;
-            startCooldown = true;
-            player.getCooldowns().addCooldown(ModItems.BOOTS.get(), 150);
-        }
-    }
-
-
-
-
-    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        Player player = (Player) slotContext.entity();
-        player.removeEffect(MobEffects.MOVEMENT_SPEED);
-        override = false;
     }
 }

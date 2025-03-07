@@ -17,7 +17,7 @@ public class BuffAccessory extends Item implements ICurioItem {
     private final double[] amount;
     private final UUID[] ids;
 
-    public BuffAccessory(Properties properties, Attribute[] attribute, int born[], double[] amount) {
+    public BuffAccessory(Properties properties, Attribute[] attribute, int[] born, double[] amount) {
         super(properties);
         this.type = attribute;
         this.born = born;
